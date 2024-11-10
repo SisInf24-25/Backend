@@ -1,11 +1,8 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+const app = require('./app');
+const PORT = process.env.PORT || 8000;
 
-app.get('/', (req, res) => {
-  res.send('¡Hola, mundo!');
-});
-
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'test') { // Evita iniciar el servidor en modo de prueba
+  app.listen(PORT, () => {
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  });
+}

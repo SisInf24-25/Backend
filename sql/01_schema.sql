@@ -4,26 +4,29 @@ CREATE TABLE users (
     lastname VARCHAR(25),
     username VARCHAR(20) NOT NULL UNIQUE,
     mail VARCHAR(50) NOT NULL UNIQUE,
+    number CHAR(9),
     password VARCHAR(64) NOT NULL,
-    type CHAR(1) NOT NULL CHECK (type IN ('0', '1', '2'))
+    type CHAR(1) NOT NULL CHECK (type IN ('0', '1', '2')),
+    active BOOLEAN NOT NULL
 );
 
 CREATE TABLE house (
     id SERIAL PRIMARY KEY, 
-    nombre TEXT NOT NULL,
+    title TEXT NOT NULL,
     owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     price NUMERIC(7, 2) NOT NULL,
     n_wc SMALLINT NOT NULL, 
     n_rooms SMALLINT NOT NULL, 
     n_single_beds SMALLINT NOT NULL, 
     n_double_beds SMALLINT NOT NULL, 
-    max_guests SMALLINT NOT NULL, 
+    max_guests SMALLINT NOT NULL,
     city VARCHAR(50) NOT NULL, 
     address TEXT NOT NULL, 
-    lat NUMERIC(8, 6) NOT NULL,
-    long NUMERIC(9, 6) NOT NULL, 
+    location geography(Point, 4326) NOT NULL,
     conditions BIT(12) NOT NULL, 
-    description TEXT
+    description TEXT,
+    public BOOLEAN NOT NULL,
+    active BOOLEAN NOT NULL
 );
 
 CREATE TABLE images (
@@ -51,12 +54,14 @@ CREATE TABLE house_report (
     id SERIAL PRIMARY KEY, 
     user_reporter INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     house_reported INTEGER NOT NULL REFERENCES house(id) ON DELETE CASCADE, 
-    fecha TIMESTAMPTZ NOT NULL
+    fecha TIMESTAMPTZ NOT NULL,
+    viewed BOOLEAN NOT NULL
 );
 
 CREATE TABLE user_report(
     id SERIAL PRIMARY KEY, 
     user_reporter INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     user_reported INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, 
-    fecha TIMESTAMPTZ NOT NULL
+    fecha TIMESTAMPTZ NOT NULL,
+    viewed BOOLEAN NOT NULL
 );

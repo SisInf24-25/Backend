@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     container_name: pg_container
-    image: postgres:17
+    image: postgis/postgis:17-3.4
     restart: always
     env_file:
       - .env
@@ -12,6 +12,7 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
       - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./sql/02_enable_postgis.sql:/docker-entrypoint-initdb.d/02_enable_postgis.sql
   
   pgadmin:
     container_name: pgadmin4_container
