@@ -68,12 +68,13 @@ exports.login = async (req, res) => {
         }
 
         res.status(200).json({ 
-            message: "OK", user: { user_id: req.session.user.user_id, username, img: user.img, role: req.session.user.role }
+            user: { user_id: req.session.user.user_id, username, role: req.session.user.role }
         });
         
     } catch (err) {
         console.error(err.message);
         res.status(500).send("Server Error");
+        // Control campos vacíos
     }
 };
 

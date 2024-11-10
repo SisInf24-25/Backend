@@ -1,4 +1,5 @@
 Servidor:
+- Instalar dependencias: npm install
 - Iniciar servidor: npm run start
 - Iniciar servidor en modo desarrollo: npm run dev
 
