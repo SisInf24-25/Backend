@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const sessions = require('client-sessions');
 
 const userRoutes = require("./routes/userRoutes");
 //const houseRoutes = require("./routes/houseRoutes");
+
+app.use(cors({
+    origin: true,
+    credentials: true
+  }));
 
 app.use(sessions({
   cookieName: 'session',
