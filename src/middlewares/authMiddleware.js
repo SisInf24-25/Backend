@@ -47,4 +47,4 @@ function adminAuthorized(req, res, next) {
     }
 }
   
-module.exports = { isAuthenticated, boolAuthenticated, adminAuthorized };
+module.exports = { isAuthenticated, boolAuthenticated, isOwner, isGuest, adminAuthorized };

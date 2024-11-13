@@ -12,7 +12,6 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
       - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
-      - ./sql/02_enable_postgis.sql:/docker-entrypoint-initdb.d/02_enable_postgis.sql
   
   pgadmin:
     container_name: pgadmin4_container

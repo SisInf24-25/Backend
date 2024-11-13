@@ -113,18 +113,75 @@ describe('Register Tests', () => {
 
         expect(res.statusCode).toBe(400);
     });
+});
 
+
+describe('Login Tests', () => {
 
     // Login correcto
+    it('POST /users/login: login correcto owner', async () => {
+        const data = {
+            username: 'usuario1',
+            password: 'passuser1'
+          };
+        const res = await request(app)
+            .post('/users/login')
+            .send(data)
+            .set('Accept', 'application/json');
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toHaveProperty('user');
+        expect(res.body.user).toHaveProperty('user_id');
+        expect(res.body.user).toHaveProperty('username', 'usuario1');
+        expect(res.body.user).toHaveProperty('role', 'owner');
+    });
 
     // Login nombre de usuario no registrado
+    it('POST /users/login: login usuario no existente', async () => {
+        const data = {
+            username: 'no_user',
+            password: 'pass_no_user'
+          };
+        const res = await request(app)
+            .post('/users/login')
+            .send(data)
+            .set('Accept', 'application/json');
+
+        expect(res.statusCode).toBe(404);
+        expect(res.body).toHaveProperty('error', 'Usuario no encontrado');
+    });
 
     // Login contraseña incorrecta
+    it('POST /users/login: login contraseña incorrecta', async () => {
+        const data = {
+            username: 'usuario1',
+            password: 'passuser2'
+          };
+        const res = await request(app)
+            .post('/users/login')
+            .send(data)
+            .set('Accept', 'application/json');
+
+        expect(res.statusCode).toBe(401);
+        expect(res.body).toHaveProperty('error', 'Contraseña incorrecta');
+    });
 
     // Login sin datos
+    it('POST /users/login: login sin datos', async () => {
+        const data = {};
+        const res = await request(app)
+            .post('/users/login')
+            .send(data)
+            .set('Accept', 'application/json');
 
+        expect(res.statusCode).toBe(400);
+        //expect(res.body).toHaveProperty('error', 'Contraseña incorrecta');
+    });
 
 });
+
+
+
 
 /*expect(res.body).toHaveProperty('data');
 
