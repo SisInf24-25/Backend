@@ -80,35 +80,8 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
     req.session.reset();
-    return res.json({
-        message: 'Closed session'
-    });
-    
+    res.status(200)
 };
-
-/*exports.changePass = async (req, res) => {
-    const { oldPassword, newPassword } = req.body;
-    const { user_id } = req.session.user;
-
-    try {
-        const user = await UserModel.getUserById(user_id);
-
-        const passwordMatch = await bcrypt.compare(oldPassword, user.password);
-            if (passwordMatch) {
-                await UserModel.changePass(user_id, newPassword);
-                return res.status(200).json({
-                    message: "Password changed"
-                });
-            } else {
-                return res.status(401).json({
-                    error: "Incorrect password"
-                });
-            }
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-};*/
 
 // Editar
 exports.profile = async (req, res) => {

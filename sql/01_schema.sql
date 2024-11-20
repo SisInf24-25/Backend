@@ -23,10 +23,12 @@ CREATE TABLE house (
     n_double_beds SMALLINT NOT NULL, 
     max_guests SMALLINT NOT NULL,
     city VARCHAR(50) NOT NULL, 
-    address TEXT NOT NULL, 
-    location geography(Point, 4326) NOT NULL,
+    address TEXT NOT NULL,
+    lat NUMERIC(8, 6) NOT NULL,
+    long NUMERIC(9, 6) NOT NULL,
     conditions BIT(12) NOT NULL, 
     description TEXT,
+    cancelable SMALLINT NOT NULL,
     public BOOLEAN NOT NULL,
     active BOOLEAN NOT NULL
 );
