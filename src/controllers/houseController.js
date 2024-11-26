@@ -102,3 +102,17 @@ exports.modifyHouse = async (req, res) => {
         res.status(500).send("Server Error");
     }
 }
+
+exports.getHouses = async (req, res) => {
+    try {
+
+        const houses = HouseModel.getHouses();
+        res.status(200).json({
+            houses: houses
+        });
+
+    }  catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+    }
+}

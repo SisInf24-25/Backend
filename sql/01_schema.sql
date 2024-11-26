@@ -37,20 +37,43 @@ CREATE TABLE images (
     img_link TEXT NOT NULL
 );
 
-CREATE TABLE calendar (
-    id SERIAL PRIMARY KEY, 
-    house_id INTEGER NOT NULL REFERENCES house(id) ON DELETE CASCADE, 
-    begin_day DATE NOT NULL, 
-    end_day DATE NOT NULL, 
-    available BOOLEAN NOT NULL
-);
-
 CREATE TABLE book (
     id SERIAL PRIMARY KEY, 
     guest_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, 
     guests_number SMALLINT NOT NULL, 
-    id_calendar INTEGER NOT NULL REFERENCES house(id) ON DELETE CASCADE
+    house_id INTEGER NOT NULL REFERENCES house(id) ON DELETE CASCADE,
+    date_in DATE NOT NULL,
+    date_out DATE NOT NULL,
+    price NUMERIC(10, 2) NOT NULL
 );
+
+CREATE INDEX idx_book ON book(house_id);
+
+CREATE OR REPLACE FUNCTION calculate_price()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Verificar que la fecha de salida sea posterior a la fecha de entrada
+    IF NEW.date_out <= NEW.date_in THEN
+        RAISE EXCEPTION 'Date';
+    END IF;
+
+    -- Obtener el precio por noche de la casa
+    SELECT price INTO NEW.price 
+    FROM house 
+    WHERE id = NEW.house_id;
+
+    -- Calcular el precio total: número de noches * precio por noche
+    NEW.price := NEW.price * (NEW.date_out - NEW.date_in);
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_insert_or_update_book
+BEFORE INSERT OR UPDATE ON book
+FOR EACH ROW
+EXECUTE FUNCTION calculate_price();
+
 
 CREATE TABLE house_report (
     id SERIAL PRIMARY KEY, 

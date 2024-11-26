@@ -41,6 +41,23 @@ const UserModel = {
         return house.rows[0]
     },
 
+    async getHouses() {
+        const houses = await pool.query(
+            `SELECT h.id, h.title, u.username AS owner_username, JSON_AGG(
+                                                                    JSON_BUILD_OBJECT(
+                                                                        'date_in', b.date_in, 
+                                                                        'date_out', b.date_out
+                                                                    )
+                                                                ) AS reservations
+                FROM house h 
+                        LEFT JOIN users u ON h.owner_id = u.id 
+                        LEFT JOIN book b ON b.house_id = h.id
+                WHERE h.public = true AND h.active = true
+                GROUP BY h.id, h.title, u.username`
+        );
+        return houses.rows
+    },
+
     async getHousesByCity(city) {
         const houses = await pool.query(
             `SELECT h.*, u.username AS owner_username 
