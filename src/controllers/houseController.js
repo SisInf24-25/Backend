@@ -74,7 +74,7 @@ exports.modifyHouse = async (req, res) => {
 
     try {
         
-        var house = HouseModel.getHouseById(house_id);
+        var house = await HouseModel.getHouseById(house_id);
         // Comprobar si la casa existe
         if (!house) {
             return res.status(409).json({ 
@@ -83,6 +83,8 @@ exports.modifyHouse = async (req, res) => {
         }
         // Comprobar si la casa pertenece al usuario
         if (house.owner_id != req.session.user.user_id) {
+            console.log(house.owner_id)
+            console.log(req.session.user.user_id)
             //Editar
             return res.status(403).json({ 
                 error: "Owner doesn't match"

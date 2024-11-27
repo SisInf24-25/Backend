@@ -36,7 +36,7 @@ const UserModel = {
 
     async getHouseById(house_id) {
         const house = await pool.query(
-            `SELECT * FROM house WHERE id = $1 and avtive = true`, [house_id]
+            `SELECT * FROM house WHERE id = $1 and active = true`, [house_id]
         );
         return house.rows[0]
     },
