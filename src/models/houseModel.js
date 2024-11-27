@@ -14,7 +14,7 @@ const UserModel = {
         return house.rows[0];
     },
 
-    async modifyHouse(house_id, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, 
+    async modifyHouse(house_id, title, price, n_wc, n_rooms, n_single_beds, n_double_beds, 
                         max_guests, city, address, lat, long, conditions, description, is_public) {
         const house  = await pool.query(
             `UPDATE house SET title = $2, price = $3, n_wc = $4, n_rooms = $5, n_single_beds = $6, n_double_beds = $7,
@@ -22,7 +22,7 @@ const UserModel = {
                                 description = $14, public = $15
                     WHERE id = $1 
                     RETURNING *`, 
-            [house_id, title, owner_id, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, 
+            [house_id, title, price, n_wc, n_rooms, n_single_beds, n_double_beds, max_guests, city, address, 
                 lat, long, conditions, description, is_public]
         );
         return house.rows[0];

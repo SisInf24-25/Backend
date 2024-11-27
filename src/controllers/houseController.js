@@ -92,7 +92,7 @@ exports.modifyHouse = async (req, res) => {
         }
 
         // Modificar casa
-        house = await HouseModel.modifyHouse(house_id, title, req.session.user.user_id, price, n_wc,
+        house = await HouseModel.modifyHouse(house_id, title, price, n_wc,
                                                 n_rooms, n_single_beds, n_double_beds, max_guests, city,
                                                 address, lat, long, conditions, description, is_public);
         res.status(200).json({
