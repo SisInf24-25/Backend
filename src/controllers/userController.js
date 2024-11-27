@@ -80,7 +80,7 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
     req.session.reset();
-    res.status(200)
+    res.status(200).send();
 };
 
 // Editar
