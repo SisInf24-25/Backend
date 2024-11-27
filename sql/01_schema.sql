@@ -26,7 +26,6 @@ CREATE TABLE house (
     long NUMERIC(9, 6) NOT NULL,
     conditions BIT(12) NOT NULL, 
     description TEXT,
-    cancelable SMALLINT NOT NULL,
     public BOOLEAN NOT NULL,
     active BOOLEAN NOT NULL
 );
