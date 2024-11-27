@@ -28,7 +28,7 @@ exports.deleteHouse = async (req, res) => {
     const { house_id } = req.body;
 
     // Comprobar que la petición incluye los campos necesarios
-    if (!title) {
+    if (!house_id) {
         return res.status(400).json({ 
             error: "Missing fields" 
         });
@@ -36,7 +36,7 @@ exports.deleteHouse = async (req, res) => {
 
     try {
         
-        const house = HouseModel.getHouseById(house_id);
+        const house = await HouseModel.getHouseById(house_id);
         // Comprobar si la casa existe
         if (!house) {
             return res.status(409).json({ 
@@ -53,7 +53,7 @@ exports.deleteHouse = async (req, res) => {
 
         // Eliminar casa
         await HouseModel.deleteHouse(house_id);
-        return res.status(200);
+        return res.status(200).send();
 
     } catch (err) {
         console.error(err.message);
