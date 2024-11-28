@@ -43,7 +43,7 @@ const UserModel = {
 
     async getHouses() {
         const houses = await pool.query(
-            `SELECT h.id, h.title, u.username AS owner_username, JSON_AGG(
+            `SELECT h.*, u.username AS owner_username, JSON_AGG(
                                                                     JSON_BUILD_OBJECT(
                                                                         'date_in', b.date_in, 
                                                                         'date_out', b.date_out
