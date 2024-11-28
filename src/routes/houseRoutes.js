@@ -7,5 +7,6 @@ router.post("/create", authMiddleware.isAuthenticated, authMiddleware.isOwner, h
 router.post("/delete", authMiddleware.isAuthenticated, authMiddleware.isOwner, houseController.deleteHouse);
 router.post("/modify", authMiddleware.isAuthenticated, authMiddleware.isOwner, houseController.modifyHouse);
 router.get("/all", houseController.getHouses);
+router.get("/myHouses", authMiddleware.isAuthenticated, authMiddleware.isOwner, houseController.getHousesOfOwner);
 
 module.exports = router;

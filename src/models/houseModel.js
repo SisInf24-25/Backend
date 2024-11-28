@@ -70,22 +70,20 @@ const UserModel = {
 
     async getHousesOfOwner(owner_id) {
         const houses = await pool.query(
-            `SELECT h.*, u.username AS owner_username 
-            FROM house h LEFT JOIN users u ON h.owner_id = u.id 
-            WHERE h.owner_id = $1 and h.active = true`, [owner_id]  //and h.public = true
+            `SELECT h.*, JSON_AGG(
+                            JSON_BUILD_OBJECT(
+                                'date_in', b.date_in, 
+                                'date_out', b.date_out
+                            )
+                        ) AS reservations
+                FROM house h
+                LEFT JOIN book b ON b.house_id = h.id
+                WHERE h.active = true AND h.owner_id = $1
+                GROUP BY h.id, h.title, u.username`, [owner_id]
         );
 
         return houses.rows
     }
-
-    /*async getHousesByLoc(lat, long, radius) {
-        const houses = await pool.query(
-            `SELECT * FROM house 
-            WHERE ST_DWithin(location, ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography, $3)`, 
-            [lat, long, radius]
-        );
-        return houses.rows;
-    }*/
 };
 
 module.exports = UserModel;

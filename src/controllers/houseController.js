@@ -118,3 +118,17 @@ exports.getHouses = async (req, res) => {
         res.status(500).send("Server Error");
     }
 }
+
+exports.getHousesOfOwner = async (req, res) => {
+    try {
+
+        const houses = await HouseModel.getHousesOfOwner(req.session.user.user_id);
+        res.status(200).json({
+            houses: houses
+        });
+
+    }  catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+    }
+}
