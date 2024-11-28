@@ -53,7 +53,7 @@ const UserModel = {
                         LEFT JOIN users u ON h.owner_id = u.id 
                         LEFT JOIN book b ON b.house_id = h.id
                 WHERE h.public = true AND h.active = true
-                GROUP BY h.id, h.title, u.username`
+                GROUP BY h.id, u.username`
         );
         return houses.rows
     },
@@ -79,7 +79,7 @@ const UserModel = {
                 FROM house h
                 LEFT JOIN book b ON b.house_id = h.id
                 WHERE h.active = true AND h.owner_id = $1
-                GROUP BY h.id, h.title, u.username`, [owner_id]
+                GROUP BY h.id`, [owner_id]
         );
 
         return houses.rows
