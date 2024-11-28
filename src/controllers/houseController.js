@@ -108,7 +108,7 @@ exports.modifyHouse = async (req, res) => {
 exports.getHouses = async (req, res) => {
     try {
 
-        const houses = HouseModel.getHouses();
+        const houses = await HouseModel.getHouses();
         res.status(200).json({
             houses: houses
         });
