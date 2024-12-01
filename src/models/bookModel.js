@@ -5,7 +5,7 @@ const BookModel = {
         const user  = await pool.query(
             `INSERT INTO book (guest_id, guests_number, house_id, date_in, date_out) 
                     VALUES ($1, $2, $3, $4, $5)
-                    RETURNING (SELECT nombre, lastname, mail)`,
+                    RETURNING (SELECT nombre, lastname, mail FROM users WHERE id = $1)`,
             [guest_id, guests_number, house_id, date_in, date_out]
         );
         return user.rows[0];
