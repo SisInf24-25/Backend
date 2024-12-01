@@ -35,12 +35,8 @@ const BookModel = {
 
     async getBooksOfOwner(owner_id) {
         const books = await pool.query(
-            `SELECT b.*, h.id AS house_id, h.title AS house_titleu.username AS owner_username, JSON_AGG(
-                                                                    JSON_BUILD_OBJECT(
-                                                                        'date_in', b.date_in, 
-                                                                        'date_out', b.date_out
-                                                                    )
-                                                                ) AS reservations
+            `SELECT b.*, h.title AS house_title, u.username AS guest_username,
+                    u.nombre AS guest_name, u.lastname AS guest_lastname, u.mail AS guest_mail, u.number AS guest_number
                 FROM book b 
                         LEFT JOIN house h ON b.house_id = h.id 
                         LEFT JOIN users u ON b.guest_id = u.id

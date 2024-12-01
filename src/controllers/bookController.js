@@ -20,3 +20,17 @@ exports.createBook = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+
+exports.getBooksOfOwner = async (req, res) => {
+    try {
+
+        const books = await BookModel.getBooksOfOwner(req.session.user.user_id);
+        res.status(200).json({
+            books: books
+        });
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+    }
+};
