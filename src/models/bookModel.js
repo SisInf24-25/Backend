@@ -2,12 +2,13 @@ const pool = require('../services/db');
 
 const BookModel = {
     async createBook(guest_id, guests_number, house_id, date_in, date_out) {
-        const book  = await pool.query(
+        const user  = await pool.query(
             `INSERT INTO book (guest_id, guests_number, house_id, date_in, date_out) 
-                    VALUES ($1, $2, $3, $4, $5)`,
+                    VALUES ($1, $2, $3, $4, $5)
+                    RETURNING (SELECT nombre, lastname, mail FROM users WHERE id = $1)`,
             [guest_id, guests_number, house_id, date_in, date_out]
         );
-        return book.rows[0];
+        return user.rows[0];
     },
 
     async modifyBook() {
