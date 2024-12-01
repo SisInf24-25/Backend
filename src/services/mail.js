@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 const enviarCorreoPlano = async (destinatario, asunto, texto) => {
     try {
         const info = await transporter.sendMail({
-            from: '"Nombre del Remitente" <tu-email@gmail.com>', // Dirección del remitente
+            from: `"Casas rurales" <${process.env.MAIL_PASS}`, // Dirección del remitente
             to: destinatario, // Lista de destinatarios
             subject: asunto, // Asunto del correo
             text: texto, // Cuerpo del correo (texto plano)
@@ -31,7 +31,7 @@ const enviarCorreoPlano = async (destinatario, asunto, texto) => {
 const enviarCorreoHTML = async (destinatario, asunto, texto) => {
     try {
         const info = await transporter.sendMail({
-            from: '"Nombre del Remitente" <tu-email@gmail.com>', // Dirección del remitente
+            from: `"Casas rurales" <${process.env.MAIL_PASS}`, // Dirección del remitente
             to: destinatario, // Lista de destinatarios
             subject: asunto, // Asunto del correo
             html: texto // Cuerpo del correo (HTML)

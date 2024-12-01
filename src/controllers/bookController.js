@@ -82,9 +82,7 @@ exports.createBook = async (req, res) => {
         } catch (error) {
             console.log('Error al enviar el correo');
         }
-        res.status(200).json({
-            book: book
-        });
+        res.status(200).send();
     } catch (err) {
         console.error(err.message);
         res.status(500).send("Server Error");
