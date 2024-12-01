@@ -1,4 +1,4 @@
-const { enviarCorreoHTML } = require("../../mail/mail");
+const { enviarCorreoHTML } = require("../services/mail");
 const BookModel = require("../models/bookModel");
 const HouseModel = require("../models/houseModel");
 
