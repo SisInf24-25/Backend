@@ -43,7 +43,7 @@ const BookModel = {
                 WHERE h.owner_id = $1`, 
                 [owner_id]
         );
-        return house.books;
+        return books.rows;
     }
 };
 
